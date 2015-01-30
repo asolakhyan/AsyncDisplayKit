@@ -10,6 +10,7 @@
 
 #import <AsyncDisplayKit/ASRangeController.h>
 #import <AsyncDisplayKit/ASTableViewProtocols.h>
+#import <AsyncDisplayKit/ASBaseDefines.h>
 
 @class ASCellNode;
 @protocol ASTableViewDataSource;
@@ -28,11 +29,24 @@
 @property (nonatomic, weak) id<ASTableViewDelegate> asyncDelegate;
 
 /**
- * Tuning parameters for the working range.
+ * Tuning parameters for a range.
  *
- * Defaults to a trailing buffer of one screenful and a leading buffer of two screenfuls.
+ * @param range The range to get the tuning parameters for.
+ *
+ * @returns A tuning parameter value for the given range.
+ *
+ * Defaults to the render range having one sceenful both leading and trailing and the preload range having two 
+ * screenfuls in both directions.
  */
-@property (nonatomic, assign) ASRangeTuningParameters rangeTuningParameters;
+- (ASRangeTuningParameters)tuningParametersForRange:(ASLayoutRange)range;
+
+/**
+ * Set the tuning parameters for a range.
+ *
+ * @param tuningParameters The tuning parameters to store for a range.
+ * @param range The range to set the tuning parameters for.
+ */
+- (void)setTuningParameters:(ASRangeTuningParameters)tuningParameters forRange:(ASLayoutRange)range;
 
 /**
  * Reload everything from scratch, destroying the working range and all cached nodes.
@@ -124,5 +138,11 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayNodeForRowAtIndexPath:(NSIndexPath *)indexPath;
 - (void)tableView:(UITableView *)tableView didEndDisplayingNodeForRowAtIndexPath:(NSIndexPath*)indexPath;
+
+@end
+
+@interface ASTableView (Deprecated)
+
+@property (nonatomic, assign) ASRangeTuningParameters rangeTuningParameters ASDISPLAYNODE_DEPRECATED;
 
 @end
