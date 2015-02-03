@@ -180,8 +180,8 @@ static const CGFloat kASFlowLayoutControllerRefreshingThreshold = 0.3;
   CGFloat backScreens = scrollDirection == leadingDirection ? tuningParameters.leadingBufferScreenfuls : tuningParameters.trailingBufferScreenfuls;
   CGFloat frontScreens = scrollDirection == leadingDirection ? tuningParameters.trailingBufferScreenfuls : tuningParameters.leadingBufferScreenfuls;
 
-  std::pair<int, int> startIter = ASFindIndexForRange(_nodeSizes, _visibleRangeStartPos, - backScreens * viewportSize.height, _layoutDirection);
-  std::pair<int, int> endIter = ASFindIndexForRange(_nodeSizes, _visibleRangeEndPos, frontScreens * viewportSize.height, _layoutDirection);
+  std::pair<int, int> startIter = ASFindIndexForRange(_nodeSizes, _visibleRangeStartPos, - backScreens * viewportScreenMetric, _layoutDirection);
+  std::pair<int, int> endIter = ASFindIndexForRange(_nodeSizes, _visibleRangeEndPos, frontScreens * viewportScreenMetric, _layoutDirection);
 
   NSMutableSet *indexPathSet = [[NSMutableSet alloc] init];
 

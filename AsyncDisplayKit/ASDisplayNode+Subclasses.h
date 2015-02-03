@@ -186,6 +186,14 @@
 - (void)displayDidFinish ASDISPLAYNODE_REQUIRES_SUPER;
 
 /**
+ * @abstract Indicates that the node should fetch any external content, such as images.
+ *
+ * @discussion Subclasses may override this method to be notified when they should begin to fetch content. Fetching
+ * should be done asynchronously. The node is also responsible for managing the memory of any content.
+ */
+- (void)fetchExternalContent ASDISPLAYNODE_REQUIRES_SUPER;
+
+/**
  * @abstract Indicates that the receiver is about to display its subnodes. This method is not called if there are no
  * subnodes present.
  *
@@ -312,13 +320,19 @@
 - (void)didExitHierarchy ASDISPLAYNODE_REQUIRES_SUPER;
 
 /**
- * Provides an opportunity to clear backing store and other memory-intensive intermediates, such as text layout managers
- * or downloaded content that can be written to a disk cache.
+ * Provides an opportunity to clear backing store and other memory-intensive intermediates, such as text layout managers.
  *
- * @discussion Called by -recursivelyReclaimMemory.   Base class implements self.contents = nil, clearing any backing
+ * @discussion Called by -recursivelyReclaimMemory. Base class implements self.contents = nil, clearing any backing
  * store, for asynchronous regeneration when needed.
  */
 - (void)reclaimMemory ASDISPLAYNODE_REQUIRES_SUPER;
+
+/**
+ * Provides an opportunity to clear any fetched content that can be written to a disk cache.
+ *
+ * @discussion Called by -recursivelyPurgeFetchedContent.
+ */
+- (void)purgeFetchedContent ASDISPLAYNODE_REQUIRES_SUPER;
 
 
 /** @name Placeholders */

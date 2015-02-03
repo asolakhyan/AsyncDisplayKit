@@ -123,9 +123,9 @@
   return _delegate;
 }
 
-- (void)reclaimMemory
+- (void)purgeFetchedContent
 {
-  [super reclaimMemory];
+  [super purgeFetchedContent];
 
   {
     ASDN::MutexLocker l(_lock);
@@ -136,10 +136,10 @@
   }
 }
 
-- (void)displayWillStart
+- (void)fetchExternalContent
 {
-  [super displayWillStart];
-
+  [super fetchExternalContent];
+  
   {
     ASDN::MutexLocker l(_lock);
     [self _lazilyLoadImageIfNecessary];

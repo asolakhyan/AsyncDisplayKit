@@ -1344,6 +1344,19 @@ static NSInteger incrementIfFound(NSInteger i) {
   [self reclaimMemory];
 }
 
+- (void)purgeFetchedContent
+{
+  // subclass override
+}
+
+- (void)recursivelyPurgeFetchedContent
+{
+  for (ASDisplayNode *subnode in self.subnodes) {
+    [subnode recursivelyReclaimMemory];
+  }
+  [self purgeFetchedContent];
+}
+
 - (void)layout
 {
   ASDisplayNodeAssertMainThread();
@@ -1459,6 +1472,13 @@ static NSInteger incrementIfFound(NSInteger i) {
     return [_view pointInside:point withEvent:event];
   } else {
     return CGRectContainsPoint(UIEdgeInsetsInsetRect(self.bounds, slop), point);
+  }
+}
+
+- (void)fetchExternalContent
+{
+  for (ASDisplayNode *subnode in self.subnodes) {
+    [subnode fetchExternalContent];
   }
 }
 

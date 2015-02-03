@@ -320,8 +320,18 @@ typedef CALayer *(^ASDisplayNodeLayerBlock)();
  *
  * @see displaySuspended and setNeedsDisplay
  */
-
 - (void)recursivelyReclaimMemory;
+
+/**
+ * @abstract Calls -purgeFetchedContents on the receiver and its subnode hierarchy.
+ *
+ * @discussion Clears any memory-intensive fetched content.
+ * This method is used to notify the node that it should purge any content that is both expensive to fetch and to 
+ * retain in memory.
+ *
+ * @see fetchExternalContent
+ */
+- (void)recursivelyPurgeFetchedContent;
 
 /**
  * @abstract Toggle displaying a placeholder over the node that covers content until the node and all subnodes are

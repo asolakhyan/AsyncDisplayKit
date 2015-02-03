@@ -19,7 +19,8 @@ typedef NS_ENUM(NSInteger, ASScrollDirection) {
 
 typedef NS_ENUM(NSInteger, ASLayoutRange) {
   ASLayoutRangeRender,
-  ASLayoutRangePreload
+  ASLayoutRangePreload,
+  ASLayoutRangeCount
 };
 
 @protocol ASLayoutController <NSObject>
