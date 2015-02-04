@@ -10,6 +10,7 @@
 
 #import <AsyncDisplayKit/ASRangeController.h>
 #import <AsyncDisplayKit/ASTableViewProtocols.h>
+#import <AsyncDisplayKit/ASBatchContext.h>
 
 @class ASCellNode;
 @protocol ASTableViewDataSource;
@@ -33,6 +34,13 @@
  * Defaults to a trailing buffer of one screenful and a leading buffer of two screenfuls.
  */
 @property (nonatomic, assign) ASRangeTuningParameters rangeTuningParameters;
+
+/**
+ * The number of screens left to scroll before the delegate -tableView:shouldBeginBatchFetchingWithContext: is called.
+ *
+ * Defaults to one screenful.
+ */
+@property (nonatomic, assign) CGFloat leadingScreensForBatching;
 
 /**
  * Reload everything from scratch, destroying the working range and all cached nodes.
@@ -124,5 +132,32 @@
 
 - (void)tableView:(ASTableView *)tableView willDisplayNodeForRowAtIndexPath:(NSIndexPath *)indexPath;
 - (void)tableView:(ASTableView *)tableView didEndDisplayingNodeForRowAtIndexPath:(NSIndexPath*)indexPath;
+
+/**
+ * Tell the tableView if batch fetching should begin.
+ *
+ * @param tableView The sender.
+ *
+ * @discussion Use this method to conditionally fetch batches. Example use cases are: limiting the total number of
+ * objects that can be fetched or no network connection.
+ * 
+ * If not implemented, the tableView assumes that it should notify its asyncDelegate when batch fetching
+ * should occur.
+ */
+- (BOOL)shouldBatchFetchForTableView:(UITableView *)tableView;
+
+/**
+ * Receive a message that the tableView is near the end of its data set and more data should be fetched if necessary.
+ *
+ * @param tableView The sender.
+ * @param context A context object that must be notified when the batch fetch is completed.
+ *
+ * @discussion You must eventually call -completeBatchFetching: with an argument of YES in order to receive future
+ * notifications to do batch fetches.
+ *
+ * ASTableView currently only supports batch events for tail loads. If you require a head load, consider implementing a
+ * UIRefreshControl.
+ */
+- (void)tableView:(UITableView *)tableView beginBatchFetchingWithContext:(ASBatchContext *)context;
 
 @end
