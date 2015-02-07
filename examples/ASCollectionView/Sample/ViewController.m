@@ -65,7 +65,7 @@
 
 - (ASCellNode *)collectionView:(ASCollectionView *)collectionView nodeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-  NSString *text = [NSString stringWithFormat:@"[%ld.%ld] says hi", indexPath.section, indexPath.item];
+  NSString *text = [NSString stringWithFormat:@"[%zd.%zd] says hi", indexPath.section, indexPath.item];
   ASTextCellNode *node = [[ASTextCellNode alloc] init];
   node.text = text;
   node.backgroundColor = [UIColor lightGrayColor];
@@ -76,6 +76,12 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
   return 300;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView beginBatchFetchingWithContext:(ASBatchContext *)context
+{
+  NSLog(@"fetch additional content");
+  [context completeBatchFetching:YES];
 }
 
 @end
