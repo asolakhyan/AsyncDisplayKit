@@ -29,8 +29,6 @@
  */
 - (void)completeBatchFetching:(BOOL)didComplete;
 
-- (void)beginBatchFetching;
-
 /**
  * Ask the context object if the batch fetching process was cancelled by the context owner.
  *
@@ -48,5 +46,13 @@
  * be left to the owner of the batch process unless there is a specific purpose.
  */
 - (void)cancelBatchFetching;
+
+/**
+ * Notify the context object that fetching has started.
+ *
+ * @discussion Call this method only when you are beginning a fetch process. This should really only be called by the 
+ * context object's owner. Calling this method should be complimented with -completeBatchFetching:.
+ */
+- (void)beginBatchFetching;
 
 @end
